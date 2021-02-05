@@ -205,7 +205,7 @@ class GeneralizedRCNN(nn.Module):
                 proposals, _ = self.proposal_generator(images, features, None)
                 image_shape = proposals[0].image_size
                 result = Instances(image_shape)
-                result.proposal_boxes = Boxes(proposals_input)
+                result.proposal_boxes = Boxes(proposals_input.type_as(images.tensor))
                 re_score = self.roi_heads.reclassify(images, features, [result])
                 return re_score
 
